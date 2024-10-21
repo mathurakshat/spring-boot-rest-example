@@ -32,4 +32,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push Docker Image to Docker Hub
-      run: docker push rest-h2-demo
+      run: docker push mathurakshat23/rest-h2-demo
