@@ -1,11 +1,23 @@
-# Step 1: Use an official Java runtime as a base image
+# Use the official Maven image to build the project
+FROM maven:3.8.5-openjdk-17 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the project files into the container
+COPY . /app
+
+# Build the project
+RUN mvn clean package -DskipTests
+
+# Use the official OpenJDK image to run the application
 FROM openjdk:17-jdk-alpine
 
-# Step 2: Copy the application JAR file into the container
-COPY target/myapp-0.0.1-SNAPSHOT.jar myapp.jar
+# Set the working directory
+WORKDIR /app
 
-# Step 3: Expose the port the app runs on
-EXPOSE 8080
+# Copy the packaged jar file from the build stage
+COPY --from=build /app/target/rest-h2-demo-0.0.1-SNAPSHOT.jar app.jar
 
-# Step 4: Define the command to run the app
-ENTRYPOINT ["java", "-jar", "myapp.jar"]
+# Command to run the jar file
+ENTRYPOINT ["java", "-jar", "app.jar"]
