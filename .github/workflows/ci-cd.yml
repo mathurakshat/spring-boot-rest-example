@@ -26,7 +26,7 @@ jobs:
       run: docker build -t rest-h2-demo .
 
     - name: Login to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      run: echo "Success$2024" | docker login -u "mathurakshat23" --password-stdin
 
     - name: Push Docker Image to Docker Hub
       run: docker push rest-h2-demo
